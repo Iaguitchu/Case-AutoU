@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Case AutoU</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <aside class="menu">
+    <nav class="nav">
+    <a class="nav-item" href="{{ url_for('page.home') }}">Home</a>
+
+
+    <a class="nav-item" href="{{ url_for('page.lista_email') }}">Emails</a>
+
+    </nav>
+  </aside>
+
+  <main id="conteudo">
+    {% block body %}{% endblock %}
+  </main>
+</body>
+</html>
