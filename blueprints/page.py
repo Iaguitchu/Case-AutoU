@@ -4,12 +4,17 @@ from flask import Blueprint, render_template, request, jsonify, current_app, sen
 from werkzeug.utils import secure_filename
 from models import db, EmailTable
 from services.leitor_pdf import extracao_texto_pdf
+from services.classificador_email import classificador_email
 
 page = Blueprint('page', __name__)
 
-def _ext_ok(nome_arquivo: str) -> bool:
-    allowed = current_app.config.get("ALLOWED_EXT")
-    return "." in nome_arquivo and nome_arquivo.rsplit(".", 1)[1].lower() in allowed # Divide a string da direita para a esquerda, no máximo 1 vez
+def _ext_ok(nome_arquivo: str):
+    extensao = ('pdf', 'txt')
+    arquivo_tratado = nome_arquivo.rsplit(".", 1)[1].lower() # Divide a string da direita para a esquerda, no máximo 1 vez
+    if arquivo_tratado in extensao:
+        return True
+    else:
+        return False 
 
 @page.route('/', methods=["GET","POST"])
 def home():
@@ -29,26 +34,26 @@ def home():
 
             ext = arquivo.filename.rsplit(".", 1)[1].lower() # Pega a extensão do arquivo
             identificador = f"{uuid.uuid4().hex}.{ext}" # Gera um nome único para o arquivo e adiciona a extensão
-            dest = os.path.join(current_app.config["UPLOAD_FOLDER"], identificador) # define o caminho completo
+            dest = os.path.join(current_app.config["UPLOAD_FOLDER"], identificador) # Define o caminho completo
             arquivo.save(dest)
-            extracao_texto_pdf(dest)
+            extracao = extracao_texto_pdf(dest)
             nome_arquivo = identificador
-
-
-        # classificar depois com IA
-        classificacao = "Produtivo" if mensagem else "Improdutivo"
+            classificacao = classificador_email(mensagem + extracao or "")
+        
+        else:
+            classificacao = classificador_email(mensagem or "")
 
         row = EmailTable(
             email=email,
             assunto=assunto,
-            mensagem=mensagem or "(sem corpo — apenas anexo)",
+            mensagem= mensagem or "(sem corpo — apenas anexo)",
             classificacao=classificacao,
             anexo_pdf=nome_arquivo
         )
         db.session.add(row)
         db.session.commit()
 
-        return jsonify(message="Email registrado com sucesso!")
+        return jsonify(message=f"Email registrado com sucesso! Classificação: {classificacao}"), 200
     else:
         # meu lembrete para criar uma lista de emails para mostrar na página
         
