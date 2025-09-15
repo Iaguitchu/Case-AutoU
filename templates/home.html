@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
+    
     <h1>Opa to na home</h1>
 
-    <p>Bem-vindo à página inicial!</p>
-    <form id="composeForm">
-    <input type="email" name="email" placeholder="Para " id="email" required>
-    <input type="text" name="assunto" placeholder="Assunto" id="assunto" required>
-    <textarea name="mensagem" rows="6" placeholder="Mensagem (opcional se enviar PDF)" id="mensagem"></textarea>
-    
-    <div class="attach">
-    <label>Anexo (opcional):</label>
-    <input type="file" name="anexo" accept=".pdf,.txt" id="pdf">
-    <small>Até 10MB • Aceita .pdf ou .txt</small>
-  </div>
-    
-    <button id="enviar">Enviar Email</button>
-    </form>
 
-<script  src="{{ url_for('static', filename='js/home.js') }}"></script>
+     <table class="inbox">
+        <thead>
+          <tr>
+            <th class="col-email">Email</th>
+            <th class="col-assunto">Assunto</th>
+            <th class="col-mensagem">Mensagem</th>
+            <th class="col-anexo">Anexo</th>
+            <th class="col-class">Classificação</th>
+            <th class="col-resp">Resposta Sugerida</th>
+          </tr>
+        </thead>
+        {% for email in emails %}
+        <tr>  
+            <td>{{ email["email"] }}</td>
+            <td>{{ email["assunto"] }}</td>
+            <td>{{ email["mensagem"] }}</td>
+            <td>{{ email["anexo"] }}</td>
+            <td>{{ email["classificacao"] }}</td>
+            <td>{{ email["resposta_sugerida"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+   
 {% endblock %}

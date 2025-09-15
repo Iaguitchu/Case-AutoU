@@ -4,6 +4,7 @@ const enviar = document.getElementById("enviar");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   enviar.disabled = true;
+  enviar.style.backgroundColor = "#4f7dc7";
 
   const fd = new FormData(form);
 
@@ -27,5 +28,6 @@ form.addEventListener("submit", (e) => {
     })
     .finally(() => {
       enviar.disabled = false;
+      enviar.style.backgroundColor = "#0b57d0";
     });
 });

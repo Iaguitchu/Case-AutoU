@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Case AutoU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <aside class="menu">
     <nav class="nav">
+    <button class="botao_mensagem" id="botao_mensagem"> Escrever </button>
     <a class="nav-item" href="{{ url_for('page.home') }}">Home</a>
 
 
@@ -18,7 +20,32 @@
   </aside>
 
   <main id="conteudo">
-    {% block body %}{% endblock %}
+    <form id="composeForm">
+      <div class="titulo-email">
+      <label class="label-email">Nova Mensagem</label>
+      <label id="fechar-email"> X </label>
+      </div>
+      <input type="email" name="email" placeholder="Para " id="email" required>
+      <input type="text" name="assunto" placeholder="Assunto" id="assunto" required>
+
+      <textarea name="mensagem" rows="6" placeholder="Mensagem (opcional se enviar PDF)" id="mensagem"></textarea>
+    
+      <div class="attach">
+        <button id="enviar">Enviar</button>
+        <label>Anexo</label>
+        <input type="file" name="anexo" accept=".pdf,.txt" id="pdf">
+        <small>Até 10MB • Aceita .pdf ou .txt</small>
+      </div> 
+    </form>
+    {% block body %}
+    
+    {% endblock %}
+    
   </main>
+  <script  src="{{ url_for('static', filename='js/home.js') }}"></script>
+  <script  src="{{ url_for('static', filename='js/botao_mensagem.js') }}"></script>
 </body>
 </html>
+
+
+

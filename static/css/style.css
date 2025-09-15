@@ -11,6 +11,7 @@ html, body { height: 100%; }
 body{
   margin: 0;
   background-color: var(--bg);
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 
@@ -65,4 +66,157 @@ body{
 #sendEmail:hover{
   background-color: #4f7dc7;
 }
+
+table.inbox {
+  width: 100%;
+  border-collapse: collapse;           /* importante p/ a borda ficar colada */
+  table-layout: fixed;                 /* colunas mais estáveis */
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;                 
+}
+
+th {
+  background: #fff;
+  border-bottom: 1px solid #e6e6e6;
+  text-align: left;
+}
+
+tr {
+  border-bottom: 1px solid #e6e6e6;    /* <<< linha separadora */
+}
+
+tr:hover {
+  background: #f6f8fb;                 /* hover tipo Gmail */
+}
+    
+.col-email { 
+  width: 15%;
+}
+
+.col-assunto { 
+  width: 15%; font-weight: 500; 
+}
+
+.col-mensagem { 
+  width: 15%; color: #5f6368; 
+}
+
+.col-anexo {
+  width: 8%; 
+}
+
+.col-class { 
+  width: 6%; font-weight: 600; 
+}
+
+.col-resp {
+  width: 26%; 
+}
+
+tbody, #enviar {
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  margin-left: 45%;
+}
+
+#composeForm {
+  position: fixed;         /* fixa na tela */
+  bottom: 0;               /* gruda no rodapé */
+  right: 0;                /* gruda na direita */
+  width: 40%;              /* largura parecida com a caixa do Gmail */
+  background: #fff;        /* fundo branco */
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);  /* sombra superior */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: none;
+  flex-direction: column;
+}
+
+.label-email{
+  color: var(--link);
+  padding: 4px 8px;
+
+}
+
+
+#enviar {
+  background-color: #0b57d0;
+  border: none;
+  color: white;
+  gap: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 20px;   /* pílula */
+  align-self: center;
+  margin-top: 10px;
+  width: 100px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+#enviar:hover {
+  background-color: #4f7dc7;
+}
+
+
+input,textarea {
+  border: none;
+  border-bottom: 1px solid #ccc; /* só linha embaixo */
+  outline: none;
+  padding: 6px 8px;
+}
+
+
+
+.attach{
+  background-color: white;
+}
+
+#pdf{
+  border:none
+}
+
+.titulo-email{
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--menu-bg);
+      border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 10px;
+}
+
+#fechar-email{
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  background: none;
+  color: white;
+  margin-right: 15px;
+}
+
+#botao_mensagem{
+  background-color: #0d161e;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 20px;
+  width: 200px;
+}
+
+#botao_mensagem:hover{
+  background-color: #2e3a45;
+}
+
 

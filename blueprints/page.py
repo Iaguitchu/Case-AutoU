@@ -31,7 +31,11 @@ def home():
         arquivo = request.files.get("anexo")
         nome_arquivo = None
 
-        if arquivo and arquivo.filename:
+        if mensagem is None or mensagem.strip() == "" and (arquivo is None or arquivo.filename == ""):
+            resposta_sugerida = "Por favor, insira uma mensagem ou anexe um arquivo."
+            classificacao = "Improdutivo"
+
+        elif arquivo and arquivo.filename:
             if not _ext_ok(arquivo.filename):
                 return jsonify(message="Extensão não permitida (use .pdf ou .txt)."), 400
 
@@ -48,11 +52,11 @@ def home():
             nome_arquivo = identificador
             texto = (mensagem or "") + (extracao or "")
             classificacao = classificador_email(processar_lemma(texto))
-            resposta_sugerida = sugerir_resposta(texto or "", classificacao)
+            resposta_sugerida = sugerir_resposta(processar_lemma(texto) or "", classificacao)
         
         else:
             classificacao = classificador_email(processar_lemma(mensagem or ""))
-            resposta_sugerida = sugerir_resposta(mensagem or "", classificacao)
+            resposta_sugerida = sugerir_resposta(processar_lemma(mensagem) or "", classificacao)
         
 
         row = EmailTable(
@@ -68,11 +72,11 @@ def home():
 
         return jsonify(message=f"Email registrado com sucesso! Classificação: {classificacao}"), 200
     else:
-        # meu lembrete para criar uma lista de emails para mostrar na página
         
-        # emails = EmailTable.query.order_by(EmailTable.created_at.desc()).all()
-        # return render_template("home.html", emails=emails)
-        return render_template("home.html")
+        
+        emails = EmailTable.query.order_by(EmailTable.data_hora.desc()).all()
+
+        return render_template("home.html", emails=emails)
 
 
 @page.route('/lista_email')
