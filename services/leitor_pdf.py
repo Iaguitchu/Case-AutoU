@@ -8,3 +8,8 @@ def extracao_texto_pdf(caminho_arquivo: str):
         for pagina in leitor_pdf.pages:
             texto += pagina.extract_text() + "\n"
     return texto
+
+def extracao_texto_txt(caminho_arquivo: str):
+    with open(caminho_arquivo, "r", encoding="utf-8", errors="ignore") as arquivo_txt:
+        texto = arquivo_txt.read()
+    return texto

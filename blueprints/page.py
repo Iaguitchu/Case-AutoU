@@ -3,12 +3,15 @@ import os, uuid
 from flask import Blueprint, render_template, request, jsonify, current_app, send_from_directory
 from werkzeug.utils import secure_filename
 from models import db, EmailTable
-from services.leitor_pdf import extracao_texto_pdf
-from services.classificador_email import classificador_email
+from services.leitor_pdf import extracao_texto_pdf, extracao_texto_txt
+from services.classificador_email import classificador_email, sugerir_resposta
+from services.processamento_palavras import  processar_lemma
 
 page = Blueprint('page', __name__)
 
 def _ext_ok(nome_arquivo: str):
+    if "." not in nome_arquivo:
+        return False
     extensao = ('pdf', 'txt')
     arquivo_tratado = nome_arquivo.rsplit(".", 1)[1].lower() # Divide a string da direita para a esquerda, no máximo 1 vez
     if arquivo_tratado in extensao:
@@ -36,19 +39,29 @@ def home():
             identificador = f"{uuid.uuid4().hex}.{ext}" # Gera um nome único para o arquivo e adiciona a extensão
             dest = os.path.join(current_app.config["UPLOAD_FOLDER"], identificador) # Define o caminho completo
             arquivo.save(dest)
-            extracao = extracao_texto_pdf(dest)
+            if ext == "txt":
+                extracao = extracao_texto_txt(dest)
+            elif ext == "pdf":
+                extracao = extracao_texto_pdf(dest)
+            else:
+                extracao = ""
             nome_arquivo = identificador
-            classificacao = classificador_email(mensagem + extracao or "")
+            texto = (mensagem or "") + (extracao or "")
+            classificacao = classificador_email(processar_lemma(texto))
+            resposta_sugerida = sugerir_resposta(texto or "", classificacao)
         
         else:
-            classificacao = classificador_email(mensagem or "")
+            classificacao = classificador_email(processar_lemma(mensagem or ""))
+            resposta_sugerida = sugerir_resposta(mensagem or "", classificacao)
+        
 
         row = EmailTable(
             email=email,
             assunto=assunto,
-            mensagem= mensagem or "(sem corpo — apenas anexo)",
+            mensagem= mensagem or "",
             classificacao=classificacao,
-            anexo_pdf=nome_arquivo
+            anexo_pdf=nome_arquivo,
+            resposta_sugerida=resposta_sugerida
         )
         db.session.add(row)
         db.session.commit()

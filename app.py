@@ -20,7 +20,8 @@ with app.app_context():
             email="teste@autou.com",
             assunto="Primeiro email",
             mensagem="Este é um email de teste salvo direto no banco.",
-            classificacao="Produtivo"
+            classificacao="Produtivo",
+            resposta_sugerida="Obrigado pelo seu email. Entraremos em contato em breve.",
         )
         db.session.add(email_teste)
         db.session.commit()
