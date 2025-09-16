@@ -1,4 +1,3 @@
-# blueprints/page.py
 import os, uuid
 from flask import Blueprint, render_template, request, jsonify, current_app, send_from_directory
 from werkzeug.utils import secure_filename
@@ -9,6 +8,7 @@ from services.processamento_palavras import  processar_lemma
 
 page = Blueprint('page', __name__)
 
+#Verifica a extensão do arquivo
 def _ext_ok(nome_arquivo: str):
     if "." not in nome_arquivo:
         return False
@@ -36,7 +36,7 @@ def home():
             classificacao = "Improdutivo"
 
         elif arquivo and arquivo.filename:
-            if not _ext_ok(arquivo.filename):
+            if not _ext_ok(arquivo.filename): #verificando a extensão do arquivo
                 return jsonify(message="Extensão não permitida (use .pdf ou .txt)."), 400
 
             ext = arquivo.filename.rsplit(".", 1)[1].lower() # Pega a extensão do arquivo
