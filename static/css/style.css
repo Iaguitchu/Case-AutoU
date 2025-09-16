@@ -1,7 +1,7 @@
 :root { 
   --sidebar-w: 240px;
   --bg: #a4abad;
-  --menu-bg: #222D31;
+  --menu-bg: rgb(12 17 28);
   --link: #ffffff;
 }
 
@@ -76,10 +76,7 @@ table.inbox {
 }
 
 th, td {
-  padding: 10px 12px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;                 
+  padding: 10px 12px;              
 }
 
 th {
@@ -101,15 +98,10 @@ tr {
   border-bottom: 1px solid #2c2f36;
 }
 .linha-tabela:hover {
-  background: rgb(64, 89, 145);                 /* hover tipo Gmail */
+  background: rgb(64, 89, 145);                 
 }
 
 
-
-/* .col-anexo, .col-class, .col-email, .col-mensagem {
-  background-color: #404552;
-} */
-    
 .col-email { 
   width: 15%;
 }
@@ -221,7 +213,7 @@ input,textarea {
 }
 
 #botao_mensagem{
-  background-color: #0d161e;
+  background-color: #1d3c59;
   border: none;
   color: white;
   cursor: pointer;
@@ -232,6 +224,25 @@ input,textarea {
 
 #botao_mensagem:hover{
   background-color: #2e3a45;
+}
+
+
+/* padrão: truncado */
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.expandido td {
+  white-space: normal; /* volta a permitir quebra de linha em espaços e pontuação (desfaz o nowrap) */
+  overflow-wrap: anywhere; 
+   /* permite quebrar palavras gigantes sem espaços (tipo AAAAAAAA 10000x)
+    em qualquer ponto para não “estourar” a coluna */
+}
+
+.btn-eye {
+  cursor: pointer;
+  margin-right: 6px;
 }
 
 

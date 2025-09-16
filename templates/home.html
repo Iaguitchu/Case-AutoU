@@ -17,16 +17,20 @@
           </tr>
         </thead>
         {% for email in emails %}
-        <tr class="linha-tabela">  
-            <td>{{ email["email"] }}</td>
-            <td>{{ email["assunto"] }}</td>
-            <td>{{ email["mensagem"] }}</td>
-            <td>{{ email["anexo"] }}</td>
-            <td>{{ email["classificacao"] }}</td>
-            <td>{{ email["resposta_sugerida"] }}</td>
+        <tr class="linha-tabela">
+          <td class="col-email ellipsis">
+            <span class="btn-eye">👁</span>
+            {{ email["email"] }}
+          </td>
+          <td class="col-assunto ellipsis">{{ email["assunto"] }}</td>
+          <td class="col-mensagem ellipsis">{{ email["mensagem"] }}</td>
+          <td class="col-anexo ellipsis">{{ email["anexo"] }}</td>
+          <td class="col-class ellipsis">{{ email["classificacao"] }}</td>
+          <td class="col-resp ellipsis">{{ email["resposta_sugerida"] }}</td>
         </tr>
+
+
         {% endfor %}
     </table>
-
-   
+  <script  src="{{ url_for('static', filename='js/filtro.js') }}"></script>
 {% endblock %}
