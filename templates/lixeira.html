@@ -2,7 +2,7 @@
 
 {% block body %}
     
-    <h1>Case AutoU </h1>
+    <h1>Lixeira</h1>
 
 
      <table class="inbox">
@@ -15,6 +15,7 @@
             <th class="col-class">Classificação</th>
             <th class="col-resp">Resposta Sugerida</th>
             <th class="col-lixeira">Lixeira</th>
+            <th class="col-restaurar">Restaurar</th>
           </tr>
         </thead>
         {% for email in emails %}
@@ -48,11 +49,16 @@
             <img src="{{ url_for('static', filename='icones/lixeira.svg') }}" class="btn-lixeira" data-id="{{ email['id'] }}"
                   alt="Excluir" width="20" height="20" style="cursor:pointer;">
           </td>
+          <td>
+            <img src="{{ url_for('static', filename='icones/restaurar.svg') }}" class="btn-restaurar" data-id="{{ email['id'] }}"
+                  alt="Excluir" width="20" height="20" style="cursor:pointer;">
+          </td>
         </tr>
 
 
         {% endfor %}
     </table>
   <script  src="{{ url_for('static', filename='js/filtro.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/enviar_lixeira.js') }}"></script>
+  <script  src="{{ url_for('static', filename='js/excluir.js') }}"></script>
+  <script  src="{{ url_for('static', filename='js/restaurar.js') }}"></script>
 {% endblock %}

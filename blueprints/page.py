@@ -65,7 +65,8 @@ def home():
             mensagem= mensagem or "",
             classificacao=classificacao,
             anexo_pdf=nome_arquivo,
-            resposta_sugerida=resposta_sugerida
+            resposta_sugerida=resposta_sugerida,
+            excluidos = " "
         )
         db.session.add(row)
         db.session.commit()
@@ -74,17 +75,63 @@ def home():
     else:
         
         
-        emails = EmailTable.query.order_by(EmailTable.data_hora.desc()).all()
+        emails = (
+            EmailTable.query
+            .filter(EmailTable.excluidos != "*")   # adiciona o WHERE
+            .order_by(EmailTable.data_hora.desc()).all())
 
         return render_template("home.html", emails=emails)
 
 
-@page.route('/lista_email')
-def lista_email():
-    return render_template("lista_email.html")
+@page.route('/lixeira')
+def lixeira():
+
+    emails = (
+            EmailTable.query
+            .filter(EmailTable.excluidos == "*")   # adiciona o WHERE
+            .order_by(EmailTable.data_hora.desc()).all())
+
+    return render_template("lixeira.html", emails=emails)
+    
 
 
 @page.route("/uploads/<path:filename>")
 def mostra_pdf(filename):
     upload_dir = current_app.config["UPLOAD_FOLDER"]
     return send_from_directory(upload_dir, filename)
+
+
+@page.route("/emails/<int:email_id>/excluir", methods = ["POST"])
+def excluir_email(email_id):
+    email = EmailTable.query.get_or_404(email_id)
+    email.excluidos = "*"          # marca como excluído
+    db.session.commit()
+    return ("", 204)
+
+
+@page.route("/emails/<int:email_id>/restaurar", methods = ["POST"])
+def restaurar_email(email_id):
+    email = EmailTable.query.get_or_404(email_id)
+    email.excluidos = " "         
+    db.session.commit()
+    return ("", 204)
+
+
+@page.route("/emails/<int:email_id>/apagar", methods = ["POST"])
+def apagar_email(email_id):
+    email = EmailTable.query.get_or_404(email_id)
+
+    # tenta remover arquivo físico, se houver
+    if email.anexo_pdf:
+        upload_dir = current_app.config["UPLOAD_FOLDER"]
+        file_path = os.path.join(upload_dir, email.anexo_pdf)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+        except Exception as e:
+            current_app.logger.warning(f"Erro removendo arquivo {file_path}: {e}")
+
+    # remove do banco
+    db.session.delete(email)
+    db.session.commit()
+    return ("", 204)

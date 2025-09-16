@@ -119,13 +119,20 @@ tr {
 }
 
 .col-class { 
-  width: 6%; font-weight: 600; 
+  width: 8%; font-weight: 600; 
 }
 
 .col-resp {
   width: 26%; 
 }
 
+.col-lixeira{
+  width: 6%;
+}
+
+.col-resturar{
+  width: 6%;
+}
 
 h1 {
   font-size: 24px;

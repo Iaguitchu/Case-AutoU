@@ -22,6 +22,7 @@ with app.app_context():
             mensagem="Este é um email de teste salvo direto no banco.",
             classificacao="Produtivo",
             resposta_sugerida="Obrigado pelo seu email. Entraremos em contato em breve.",
+            excluidos = " "
         )
         db.session.add(email_teste)
         db.session.commit()
