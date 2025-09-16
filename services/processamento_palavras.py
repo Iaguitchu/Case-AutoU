@@ -1,7 +1,12 @@
 # rodar antes:  python -m spacy download pt_core_news_sm
 import spacy
+try:
+    nlp = spacy.load("pt_core_news_sm")
+except OSError:
+    from spacy.cli import download
+    download("pt_core_news_sm")
+    nlp = spacy.load("pt_core_news_sm")
 
-nlp = spacy.load("pt_core_news_sm")
 
 def processar_lemma(texto: str) -> str:
     doc = nlp(texto)
