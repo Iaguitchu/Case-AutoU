@@ -12,6 +12,7 @@ body{
   margin: 0;
   background-color: var(--bg);
   font-family: 'Roboto', Arial, sans-serif;
+  background-color: rgb(17 24 39)
 }
 
 
@@ -82,18 +83,32 @@ th, td {
 }
 
 th {
-  background: #fff;
   border-bottom: 1px solid #e6e6e6;
   text-align: left;
+  
 }
 
 tr {
-  border-bottom: 1px solid #e6e6e6;    /* <<< linha separadora */
+  color: white;
+  background: #404552;
+
 }
 
-tr:hover {
-  background: #f6f8fb;                 /* hover tipo Gmail */
+.cabecalho-tabela{
+  background-color: #fe7605;
 }
+.linha-tabela{
+  border-bottom: 1px solid #2c2f36;
+}
+.linha-tabela:hover {
+  background: rgb(64, 89, 145);                 /* hover tipo Gmail */
+}
+
+
+
+/* .col-anexo, .col-class, .col-email, .col-mensagem {
+  background-color: #404552;
+} */
     
 .col-email { 
   width: 15%;
@@ -104,7 +119,7 @@ tr:hover {
 }
 
 .col-mensagem { 
-  width: 15%; color: #5f6368; 
+  width: 15%; color: white; 
 }
 
 .col-anexo {
@@ -127,14 +142,14 @@ h1 {
   font-size: 24px;
   margin-bottom: 16px;
   margin-left: 45%;
+  color: #fe7605 
 }
 
 #composeForm {
   position: fixed;         /* fixa na tela */
   bottom: 0;               /* gruda no rodapé */
   right: 0;                /* gruda na direita */
-  width: 40%;              /* largura parecida com a caixa do Gmail */
-  background: #fff;        /* fundo branco */
+  width: 40%;              /* largura parecida com a caixa do Gmail */      
   box-shadow: 0 -2px 8px rgba(0,0,0,0.1);  /* sombra superior */
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;

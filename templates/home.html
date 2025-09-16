@@ -2,12 +2,12 @@
 
 {% block body %}
     
-    <h1>Opa to na home</h1>
+    <h1>Case AutoU</h1>
 
 
      <table class="inbox">
-        <thead>
-          <tr>
+        <thead class="thead">
+          <tr class="cabecalho-tabela">
             <th class="col-email">Email</th>
             <th class="col-assunto">Assunto</th>
             <th class="col-mensagem">Mensagem</th>
@@ -17,7 +17,7 @@
           </tr>
         </thead>
         {% for email in emails %}
-        <tr>  
+        <tr class="linha-tabela">  
             <td>{{ email["email"] }}</td>
             <td>{{ email["assunto"] }}</td>
             <td>{{ email["mensagem"] }}</td>
