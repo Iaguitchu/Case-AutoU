@@ -2,7 +2,7 @@
 
 {% block body %}
     
-    <h1>Case AutoU</h1>
+    <h1>Case AutoU </h1>
 
 
      <table class="inbox">
@@ -19,12 +19,28 @@
         {% for email in emails %}
         <tr class="linha-tabela">
           <td class="col-email ellipsis">
-            <span class="btn-eye">👁</span>
+              <img class="btn-eye" src="{{ url_for('static', filename='icones/eye.svg') }}" 
+                    alt="Olho" width="20" height="20">
+
             {{ email["email"] }}
           </td>
           <td class="col-assunto ellipsis">{{ email["assunto"] }}</td>
           <td class="col-mensagem ellipsis">{{ email["mensagem"] }}</td>
-          <td class="col-anexo ellipsis">{{ email["anexo"] }}</td>
+          {% if email["anexo_pdf"] %}
+            <td class="col-anexo ellipsis">
+              {% if email["anexo_pdf"].endswith(".pdf") %}
+                <a href="{{ url_for('page.mostra_pdf', filename=email['anexo_pdf']) }}" target="_blank" title="Abrir PDF">
+                  <img src="{{ url_for('static', filename='icones/pdf.svg') }}" class="btn-pdf" alt="PDF" width="20" height="20" style="cursor:pointer;">
+                </a>
+              {% elif email["anexo_pdf"].endswith(".txt") %}
+                <a href="{{ url_for('page.mostra_pdf', filename=email['anexo_pdf']) }}" target="_blank" title="Abrir TXT">
+                  <img src="{{ url_for('static', filename='icones/txt.svg') }}" class="btn-txt" alt="TXT" width="20" height="20" style="cursor:pointer;">
+                </a>
+              {% endif %}
+            </td>
+          {% else %}
+            <td class="col-anexo ellipsis"></td>
+          {% endif %}
           <td class="col-class ellipsis">{{ email["classificacao"] }}</td>
           <td class="col-resp ellipsis">{{ email["resposta_sugerida"] }}</td>
         </tr>

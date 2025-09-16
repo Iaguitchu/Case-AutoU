@@ -82,3 +82,9 @@ def home():
 @page.route('/lista_email')
 def lista_email():
     return render_template("lista_email.html")
+
+
+@page.route("/uploads/<path:filename>")
+def mostra_pdf(filename):
+    upload_dir = current_app.config["UPLOAD_FOLDER"]
+    return send_from_directory(upload_dir, filename)

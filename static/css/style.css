@@ -126,9 +126,6 @@ tr {
   width: 26%; 
 }
 
-tbody, #enviar {
-  cursor: pointer;
-}
 
 h1 {
   font-size: 24px;
@@ -241,9 +238,14 @@ input,textarea {
     em qualquer ponto para não “estourar” a coluna */
 }
 
-.btn-eye {
+.btn-eye{
   cursor: pointer;
-  margin-right: 6px;
+  width: 50px;
 }
 
+.btn-pdf, .btn-txt{
+  cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
 
