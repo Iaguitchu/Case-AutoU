@@ -16,7 +16,7 @@ Armazenamento em banco local com SQLAlchemy.
 
 Visualização dos e-mails enviados em tabela estilo Gmail.
 
-Gerenciamento de lixeira:
+Gerenciamento de lixeira.
 
 Restaurar e-mails da lixeira.
 
@@ -32,9 +32,8 @@ Python(Flask) 3.11+
 SQLAlchemy
 
 NLP:
-spaCy
- – lematização e stopwords
-Funções de pré-processamento de texto
+spaCy lematização e stopwords
+(Funções de pré-processamento de texto)
 
 ### Frontend
 HTML5 + CSS3
@@ -42,5 +41,5 @@ HTML5 + CSS3
 JavaScript 
 
 
-## Observações:
+## 🚨🚨Observações:
 Para rodar o Script após clonar, é preciso criar uma variável de ambiente chamada "OPENAI_KEY" com a chave da IA do OpenAI.
